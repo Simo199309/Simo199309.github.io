@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELH4CK3RN3GRO</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #228B22; /* Fondo verde naturaleza */
+            color: #FFFFFF;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            font-size: 3em; /* Tamaño de letra terrofrrifico */
+        }
+
+        #appList {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .appCard {
+            background-color: #333;
+            color: #FFFFFF;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 8px;
+            width: 200px;
+            text-align: center;
+        }
+
+        #ipSearchForm {
+            margin-top: 20px;
+        }
+
+        #ipInfo {
+            margin-top: 20px;
+        }
+
+        #addAppForm {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ELH4CK3RN3GRO</h1>
+
+    <div id="ipSearchForm">
+        <label for="ipInput">Buscar dirección IP:</label>
+        <input type="text" id="ipInput" placeholder="Ingrese una dirección IP" onkeypress="handleEnter(event)">
+        <button onclick="searchIP()">Buscar</button>
+    </div>
+
+    <div id="ipInfo"></div>
+
+    <div id="appList"></div>
+
+    <div id="addAppForm">
+        <h2>Agregar nueva aplicación</h2>
+        <label for="appName">Nombre:</label>
+        <input type="text" id="appName">
+        <label for="appDescription">Descripción:</label>
+        <input type="text" id="appDescription">
+        <button onclick="addApplication()">Agregar</button>
+    </div>
+
+    <button onclick="changeBackgroundColor()">Cambiar fondo</button>
+
+    <script>
+        // Ejemplo de aplicaciones
+        const applications = [
+            { name: 'App1', description: 'Descripción de la App1' },
+            { name: 'App2', description: 'Descripción de la App2' },
+            { name: 'App3', description: 'Descripción de la App3' }
+        ];
+
+        // Crear tarjetas de aplicación
+        const appList = document.getElementById('appList');
+
+        function createAppCards() {
+            applications.forEach(app => {
+                const appCard = document.createElement('div');
+                appCard.className = 'appCard';
+                appCard.innerHTML = `<h3>${app.name}</h3><p>${app.description}</p>`;
+                appList.appendChild(appCard);
+            });
+        }
+
+        createAppCards();
+
+        // Función para buscar información de IP (sin API)
+        function searchIP() {
+            const ipInput = document.getElementById('ipInput').value;
+
+            // Validar la dirección IP (puedes agregar más validaciones según tus necesidades)
+
+            const ipInfoDiv = document.getElementById('ipInfo');
+            ipInfoDiv.innerHTML = `<h2>Información de IP</h2><p>IP: ${ipInput}</p><p>Ubicación: No disponible sin API</p>`;
+        }
+
+        // Función para agregar una nueva aplicación
+        function addApplication() {
+            const appName = document.getElementById('appName').value;
+            const appDescription = document.getElementById('appDescription').value;
+
+            // Validar campos (puedes agregar más validaciones según tus necesidades)
+
+            // Agregar la nueva aplicación al array
+            applications.push({ name: appName, description: appDescription });
+
+            // Limpiar campos de entrada
+            document.getElementById('appName').value = '';
+            document.getElementById('appDescription').value = '';
+
+            // Limpiar y volver a crear las tarjetas de aplicación
+            appList.innerHTML = '';
+            createAppCards();
+        }
+
+        // Función para cambiar el fondo de la página
+        function changeBackgroundColor() {
+            const newColor = prompt('Ingrese un color para el fondo (ej. #RRGGBB):');
+            document.body.style.backgroundColor = newColor;
+        }
+
+        // Función para manejar la tecla Enter en el campo de búsqueda de IP
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                searchIP();
+            }
+        }
+    </script>
+</body>
+</html>
