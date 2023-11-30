@@ -1,145 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELH4CK3RN3GRO</title>
+    <title>Web Scraping con DAN</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #228B22; /* Fondo verde naturaleza */
-            color: #FFFFFF;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            background-image: url('tu_imagen_de_fondo.jpg');
+            background-size: cover;
+            color: white;
+            font-family: Arial, sans-serif;
         }
-
-        h1 {
-            font-size: 3em; /* Tamaño de letra terrofrrifico */
-        }
-
-        #appList {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-
-        .appCard {
-            background-color: #333;
-            color: #FFFFFF;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 8px;
-            width: 200px;
-            text-align: center;
-        }
-
-        #ipSearchForm {
-            margin-top: 20px;
-        }
-
-        #ipInfo {
-            margin-top: 20px;
-        }
-
-        #addAppForm {
-            margin-top: 20px;
+        #informacion {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>ELH4CK3RN3GRO</h1>
-
-    <div id="ipSearchForm">
-        <label for="ipInput">Buscar dirección IP:</label>
-        <input type="text" id="ipInput" placeholder="Ingrese una dirección IP" onkeypress="handleEnter(event)">
-        <button onclick="searchIP()">Buscar</button>
+    <div id="informacion">
+        <h1>Información Recolectada</h1>
+        <p>Correos: <span id="correos"></span></p>
+        <p>Nombres: <span id="nombres"></span></p>
+        <p>IPs: <span id="ips"></span></p>
+        <p>Teléfonos: <span id="telefonos"></span></p>
+        <p>Hosts: <span id="hosts"></span></p>
+        <p>Terminales Agadir: <span id="terminales_agadir"></span></p>
     </div>
-
-    <div id="ipInfo"></div>
-
-    <div id="appList"></div>
-
-    <div id="addAppForm">
-        <h2>Agregar nueva aplicación</h2>
-        <label for="appName">Nombre:</label>
-        <input type="text" id="appName">
-        <label for="appDescription">Descripción:</label>
-        <input type="text" id="appDescription">
-        <button onclick="addApplication()">Agregar</button>
-    </div>
-
-    <button onclick="changeBackgroundColor()">Cambiar fondo</button>
 
     <script>
-        // Ejemplo de aplicaciones
-        const applications = [
-            { name: 'App1', description: 'Descripción de la App1' },
-            { name: 'App2', description: 'Descripción de la App2' },
-            { name: 'App3', description: 'Descripción de la App3' }
-        ];
+        // Listas para almacenar la información
+        var correos = [];
+        var nombres = [];
+        var ips = [];
+        var telefonos = [];
+        var hosts = [];
+        var terminales_agadir = [];
 
-        // Crear tarjetas de aplicación
-        const appList = document.getElementById('appList');
-
-        function createAppCards() {
-            applications.forEach(app => {
-                const appCard = document.createElement('div');
-                appCard.className = 'appCard';
-                appCard.innerHTML = `<h3>${app.name}</h3><p>${app.description}</p>`;
-                appList.appendChild(appCard);
-            });
+        // Función para mostrar la información en la página
+        function mostrarInformacion() {
+            document.getElementById('correos').innerText = JSON.stringify(correos);
+            document.getElementById('nombres').innerText = JSON.stringify(nombres);
+            document.getElementById('ips').innerText = JSON.stringify(ips);
+            document.getElementById('telefonos').innerText = JSON.stringify(telefonos);
+            document.getElementById('hosts').innerText = JSON.stringify(hosts);
+            document.getElementById('terminales_agadir').innerText = JSON.stringify(terminales_agadir);
         }
 
-        createAppCards();
-
-        // Función para buscar información de IP (sin API)
-        function searchIP() {
-            const ipInput = document.getElementById('ipInput').value;
-
-            // Validar la dirección IP (puedes agregar más validaciones según tus necesidades)
-
-            const ipInfoDiv = document.getElementById('ipInfo');
-            ipInfoDiv.innerHTML = `<h2>Información de IP</h2><p>IP: ${ipInput}</p><p>Ubicación: No disponible sin API</p>`;
+        // Función para simular la auto navegación cada minuto
+        function autoNavegacion() {
+            setInterval(function() {
+                // Simular la obtención de un nuevo enlace
+                var nuevoEnlace = obtenerNuevoEnlace();
+                
+                // Realizar acciones adicionales en el nuevo enlace (puedes agregar lógica adicional aquí)
+                accionesAficionadas(nuevoEnlace);
+                
+                // Actualizar la información en la página
+                mostrarInformacion();
+            }, 60000);  // 60000 milisegundos = 1 minuto
         }
 
-        // Función para agregar una nueva aplicación
-        function addApplication() {
-            const appName = document.getElementById('appName').value;
-            const appDescription = document.getElementById('appDescription').value;
-
-            // Validar campos (puedes agregar más validaciones según tus necesidades)
-
-            // Agregar la nueva aplicación al array
-            applications.push({ name: appName, description: appDescription });
-
-            // Limpiar campos de entrada
-            document.getElementById('appName').value = '';
-            document.getElementById('appDescription').value = '';
-
-            // Limpiar y volver a crear las tarjetas de aplicación
-            appList.innerHTML = '';
-            createAppCards();
+        // Función para simular la obtención de un nuevo enlace (debes reemplazar esto con tu lógica real)
+        function obtenerNuevoEnlace() {
+            return 'https://nuevoenlace.com';
         }
 
-        // Función para cambiar el fondo de la página
-        function changeBackgroundColor() {
-            const newColor = prompt('Ingrese un color para el fondo (ej. #RRGGBB):');
-            document.body.style.backgroundColor = newColor;
+        // Función para realizar acciones adicionales aficionadas en cada enlace
+        function accionesAficionadas(enlace) {
+            console.log('Realizando acciones adicionales aficionadas en el enlace:', enlace);
+            // Agrega aquí cualquier acción adicional que desees realizar en cada enlace
         }
 
-        // Función para manejar la tecla Enter en el campo de búsqueda de IP
-        function handleEnter(event) {
-            if (event.key === 'Enter') {
-                searchIP();
-            }
-        }
+        // Llamamos a la función para mostrar la información al cargar la página
+        mostrarInformacion();
+
+        // Llamamos a la función para iniciar la auto navegación
+        autoNavegacion();
     </script>
 </body>
 </html>
